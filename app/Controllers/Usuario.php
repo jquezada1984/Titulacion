@@ -2,11 +2,11 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+class Usuario extends BaseController
 {
     public function index(): string
     {
-        return view('calendario');
+        return view('usuario');
     }
 
     public function index3(): string

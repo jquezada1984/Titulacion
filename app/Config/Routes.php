@@ -7,3 +7,5 @@ use CodeIgniter\Router\RouteCollection;
  */
 $routes->get('/', 'Home::index');
 $routes->get('/calendario', 'Home::index3');
+
+$routes->get('/usuario', 'Usuario::index');
