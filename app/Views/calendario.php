@@ -13,7 +13,14 @@
 <?= $this->endSection() ?>                 
 
 <?= $this->section('content') ?>
-    
+   
+<div class="mb-3 text-end">
+    <button id="btnLlamarServicios" class="btn btn-primary">
+            Asignador automático de fechas para tesis
+    </button>
+</div>
+
+
 <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
