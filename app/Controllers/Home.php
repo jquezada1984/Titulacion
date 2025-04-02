@@ -4,8 +4,12 @@ namespace App\Controllers;
 
 use App\Models\DisponibilidadModel;
 
+use CodeIgniter\API\ResponseTrait;
+
 class Home extends BaseController
 {
+    use ResponseTrait;
+
     public function index(): string
     {
         return view('calendario');
@@ -24,19 +28,27 @@ class Home extends BaseController
     }
 
 
-    public function index3(): string
+    public function cambiarEstado()
     {
-        $json = '[
-            {
-                "id": 1,
-                "title": "Evento externo",
-                "start": "2025-03-25T09:00:00",
-                "end": "2025-03-25T11:00:00",
-                "extendedProps": {
-                    "calendar": "Danger"
-                }
-            }
-        ]';
-        return $json;
-    }    
+        $json = $this->request->getJSON();
+
+        $id = $json->id_evento ?? null;
+        $estado = $json->estado ?? null;
+
+        if (!$id || is_null($estado)) {
+            return $this->fail("Faltan parámetros requeridos", 400);
+        }
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('asignaciones_eventos');
+
+        $updated = $builder->where('id', $id)
+            ->update(['estado' => $estado]);
+
+        if ($updated) {
+            return $this->respond(['message' => 'Estado actualizado correctamente']);
+        } else {
+            return $this->fail("No se pudo actualizar el estado");
+        }
+    }
 }

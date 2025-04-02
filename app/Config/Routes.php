@@ -8,3 +8,4 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/', 'Home::index');
 $routes->get('/generarhorariostesis', 'Home::generarhorariostesis');
 $routes->get('/usuario', 'Usuario::index');
+$routes->post('api/eventos/cambiar-estado', 'Home::cambiarEstado');
