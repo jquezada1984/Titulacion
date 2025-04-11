@@ -81,42 +81,6 @@
                 <i class="mdi mdi-dots-horizontal"></i>
                 <span class="hide-menu">Principal</span>
               </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="app-chats.html"
-                  aria-expanded="false"
-                  ><i data-feather="message-circle" class="feather-icon"></i
-                  ><span class="hide-menu">Profesores</span></a
-                >
-              </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="app-todo.html"
-                  aria-expanded="false"
-                  ><i data-feather="check-circle" class="feather-icon"></i
-                  ><span class="hide-menu">Estudiantes</span></a
-                >
-              </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="app-calendar.html"
-                  aria-expanded="false"
-                  ><i data-feather="calendar" class="feather-icon"></i
-                  ><span class="hide-menu">Calendario</span></a
-                >
-              </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link waves-effect waves-dark sidebar-link"
-                  href="app-taskboard.html"
-                  aria-expanded="false"
-                  ><i data-feather="layout" class="feather-icon"></i
-                  ><span class="hide-menu">Grupo de Tesis</span></a
-                >
-              </li>
             </ul>
           </nav>
           <!-- End Sidebar navigation -->

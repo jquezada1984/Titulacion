@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\DisponibilidadModel;
+use App\Models\Usuario_model;
 
 use CodeIgniter\API\ResponseTrait;
 
@@ -18,7 +19,9 @@ class Home extends BaseController
 
     public function index(): string
     {
-        return view('calendario');
+        $model = new Usuario_model();
+        $data['profesores'] = $model->get_profesores_activos();
+        return view('calendario',$data);
     }
 
 
@@ -59,6 +62,8 @@ class Home extends BaseController
         // Extraer parámetros
         $id = $json->id_evento ?? null;
         $estado = $json->estado ?? null;
+        $tesis = $json->title ?? null;
+        $idProfesor = $json->idProfesor ?? null;
         // Validar que se hayan recibido los parámetros necesarios
         if (!$id || is_null($estado)) {
             return $this->fail("Faltan parámetros requeridos", 400);
@@ -68,7 +73,7 @@ class Home extends BaseController
         $builder = $db->table('asignaciones_eventos');
         // Actualizar el estado del evento
         $updated = $builder->where('id', $id)
-            ->update(['estado' => $estado]);
+            ->update(['estado' => $estado,'titulo_tesis'=>$tesis,'profesor_id'=>$idProfesor]);
         // Retornar una respuesta según el resultado de la actualización
         if ($updated) {
             return $this->respond(['message' => 'Estado actualizado correctamente']);

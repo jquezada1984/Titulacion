@@ -12,12 +12,13 @@ let calendar;
   
     // Elementos del formulario/modal
     const getModalTitleEl = document.querySelector("#event-title");
+    const getModalIdProfesor = document.querySelector("#id_profesor");
     const getModalStartDateEl = document.querySelector("#event-start-date");
     const getModalEndDateEl = document.querySelector("#event-end-date");
     const getModalAddBtnEl = document.querySelector(".btn-add-event");
     var getModalUpdateBtnEl = document.querySelector(".btn-update-event");
     const calendarEl = document.querySelector("#calendar");
-  
+    
     // Mapeo de colores de eventos
     const calendarsEvents = {
       Danger: "danger",
@@ -83,8 +84,14 @@ let calendar;
         const radio = document.querySelector(`input[value="${level}"]`);
   
         getModalTitleEl.value = eventObj.title;
+        
         if (radio) radio.checked = true;
-  
+        console.log(JSON.stringify(eventObj, null, 2));
+        const idProfesor = eventObj.extendedProps.idProfesor;
+        if (idProfesor) {
+            getModalIdProfesor.value = idProfesor;
+          }
+
         getModalUpdateBtnEl.setAttribute("data-fc-event-public-id", eventId);
         getModalAddBtnEl.style.display = "none";
         getModalUpdateBtnEl.style.display = "block";
@@ -133,6 +140,7 @@ let calendar;
       getModalTitleEl.value = "";
       getModalStartDateEl.value = "";
       getModalEndDateEl.value = "";
+      getModalIdProfesor.value = "";
       const checkedRadio = document.querySelector('input[name="event-level"]:checked');
       if (checkedRadio) checkedRadio.checked = false;
     });
@@ -141,6 +149,7 @@ let calendar;
     getModalUpdateBtnEl.addEventListener("click", async function () {
       const id = this.dataset.fcEventPublicId;
       const title = getModalTitleEl.value;
+      const idProfesor = getModalIdProfesor.value;
       const event = calendar.getEventById(id);
       const level = document.querySelector('input[name="event-level"]:checked')?.value || "";      
       // Actualizar visualmente el evento en el calendario
@@ -156,14 +165,15 @@ let calendar;
           },
           body: JSON.stringify({
             id_evento: id,
-            estado: estado
+            estado: estado,
+            title:title,
+            idProfesor:idProfesor
           })
         });
     
         if (!response.ok) throw new Error("No se pudo actualizar el estado en el servidor");
         const result = await response.json();
         console.log(result.message);
-        alert("Evento actualizado correctamente en el backend");
       } catch (error) {
         console.error("Error:", error);
         alert("Ocurrió un error al actualizar el evento");
@@ -199,8 +209,7 @@ let calendar;
       nuevosEventos.forEach(evento => {
         calendar.addEvent(evento);
       });
-  
-      alert('Eventos recargados correctamente');
+
     } catch (error) {
       console.error("Error al recargar los eventos:", error);
       alert('Error al recargar los eventos del calendario');
@@ -225,7 +234,6 @@ let calendar;
     })
     .then(data => {
         if (data.success) {          
-            alert('Primer servicio exitoso, ejecutando el segundo.');
             return fetch('http://localhost:5000/asignaciones', {
                 method: 'GET',
                 headers: {
@@ -242,7 +250,6 @@ let calendar;
     })
     .then(data => {
          if (Array.isArray(data)) {
-          alert('Ambos servicios ejecutados exitosamente. Actualizando calendario...');
           recargarEventosCalendario(calendar); // Usamos variable global
           } else {
               throw new Error("El segundo servicio devolvió un error.");

@@ -49,10 +49,25 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="">
+                                        <label class="form-label">Profesor</label>
+                                        <select id="id_profesor" name="id_profesor" class="form-control">
+                                            <option value="">Seleccione un profesor</option>
+                                            <?php foreach ($profesores as $profesor): ?>
+                                                <option value="<?= $profesor->id_tribunal ?>">
+                                                    <?= $profesor->miembros_tribunal ?>
+                                                </option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="">
                                         <label class="form-label">Tesis</label>
                                         <input id="event-title" type="text" class="form-control" />
                                     </div>
                                 </div>
+
                                 <div class="col-md-12 mt-4">
                                     <div><label class="form-label">Estado</label></div>
                                     <div class="d-flex">
